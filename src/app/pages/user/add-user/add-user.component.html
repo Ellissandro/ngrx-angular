@@ -1,0 +1,14 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate class="row w-100 justify-content-end align-items-end">
+    <div class="form-group col-md-4">
+        <label for="name">Nome</label>
+        <input ngModel required #name="ngModel" type="text" class="form-control" name="name" id="name">
+    </div>
+    <div class="form-group col-md-4">
+        <label for="name">Idade</label>
+        <input ngModel required #age="ngModel" type="number" class="form-control" name="age" id="age">
+    </div>
+
+    <div class="header-button">
+        <button [disabled]="f.invalid" type="submit" class="btn btn-primary">Adicionar</button>
+    </div>
+</form>

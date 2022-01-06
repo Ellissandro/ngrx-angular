@@ -1,0 +1,48 @@
+<section id="user">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mt-4">
+                    <div class="card-body">
+                        <div class="d-flex justifu-content-between">
+                            <div class="form-group col-md-3">
+                                <label for="search"></label>
+                                <input [formControl]="search" placeholder="Pesquisar" class="form-control" type="search"
+                                    name="search" id="search">
+                            </div>
+                            <div class="w-100">
+                                <app-add-user (onAddUser)="onSubmit($event)"></app-add-user>
+                            </div>
+                        </div>
+                        <table aria-describedby="table" class="table table-hover mt-5">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nome</th>
+                                    <th scope="col" class="text-center">Idade</th>
+                                    <th scope="col" class="text-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let user of (users$ | async); index as i">
+                                    <th scope="row">{{ i + 1 }}</th>
+                                    <td>{{ user.name }}</td>
+                                    <td class="text-center">{{ user.age }}</td>
+                                    <td class="d-flex justify-content-end table-actions">
+                                        <button (click)="delete(user.id)" class="btn">
+                                            <i aria-hidden="true" class="bi bi-trash-fill text-danger"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <span *ngIf="(users$ | async)?.length === 0" class="d-flex justify-content-center">
+                            Nenhum item encontrado
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
