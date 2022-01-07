@@ -14,6 +14,11 @@ const routes: Routes = [
   {
     path: 'posts',
     loadChildren: () => import('./pages/posts/posts.module').then(m => m.PostsModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+
   }
 ];
 

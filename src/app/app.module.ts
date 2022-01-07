@@ -10,7 +10,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
-import { appReducer } from './store/app.state';
+import { EffectsModule } from '@ngrx/effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +23,9 @@ import { appReducer } from './store/app.state';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    HttpClientModule,
     StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
   providers: [],
