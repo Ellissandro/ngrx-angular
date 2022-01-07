@@ -1,11 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { AddPostComponent } from './pages/posts/add-post/add-post.component';
-import { EditPostComponent } from './pages/posts/edit-post/edit-post.component';
-import { PostsComponent } from './pages/posts/posts-list/posts.component';
-import { UserComponent } from './pages/user/user-list/user.component';
-
 
 const routes: Routes = [
   {
@@ -14,15 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    component: UserComponent
+    loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule)
   },
   {
     path: 'posts',
-    component: PostsComponent,
-    children: [
-      { path: 'add', component: AddPostComponent },
-      { path: 'edit/:id', component: EditPostComponent },
-    ]
+    loadChildren: () => import('./pages/posts/posts.module').then(m => m.PostsModule)
   }
 ];
 
