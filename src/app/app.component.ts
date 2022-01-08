@@ -1,26 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AppState } from './store/app.state';
+import { getErrorMessage, getLoading } from './store/shared/shared.selector';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  // count$: Observable<number>;
-  // title = 'crud-ngrx';
+export class AppComponent implements OnInit {
+  showLoading: Observable<boolean>;
+  errorMessage: Observable<string>;
 
-  // constructor(private store: Store<{ count: number }>) {
-  //   this.count$ = store.select('count');
-  // }
-
-  // increment() {
-  //   this.store.dispatch(increment());
-  // }
-
-  // decrement() {
-  //   this.store.dispatch(decrement());
-  // }
+  constructor(private store: Store<AppState>) {}
+  
+    ngOnInit(): void {
+      this.showLoading =this.store.select(getLoading);
+      this.errorMessage =this.store.select(getErrorMessage);
+    }
 }

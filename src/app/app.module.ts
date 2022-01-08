@@ -5,17 +5,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HeaderComponent } from './pages/shared/header/header.component';
+import { HeaderComponent } from './pages/shared/components/header/header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { LoadingSpinnerComponent } from './pages/shared/components/loading-spinner/loading-spinner.component';
+import { appReducer } from './store/app.state';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,8 +27,8 @@ import { EffectsModule } from '@ngrx/effects';
     ReactiveFormsModule,
     HttpClientModule,
     HttpClientModule,
-    StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
+    StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
   ],
   providers: [],
