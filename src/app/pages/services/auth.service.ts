@@ -13,9 +13,17 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
     login(email: string, password: string): Observable<AuthResponseData> {
-       if (email.length < 24) {
-        return this.http.get<AuthResponseData>('');
-       }
+        return this.athenticateMock(email, password);
+    }
+
+    signUp(email: string, password: string) {
+        return this.athenticateMock(email, password);
+    }
+
+    private athenticateMock(email: string, password: string) {
+        if (email.length < 24) {
+            return this.http.get<AuthResponseData>('');
+        }
 
         return of({
             email: email,
@@ -32,4 +40,4 @@ export class AuthService {
         const expiratioNDate = new Date(new Date().getTime() + Number(data.exprireIn) * 1000)
         return new User(data.email, data.idToken, data.loalId, expiratioNDate);
     }
- }
+}

@@ -1,17 +1,21 @@
 import { createReducer, on } from "@ngrx/store"
-import { loginSuccess } from "./auth.actions"
-import { initialAuthState } from "./auth.state"
+import { loginSuccess, signupSuccess } from "./auth.actions"
+import { AuthState, initialAuthState } from "./auth.state"
 
 const _authReducer = createReducer(
     initialAuthState,
-    on(loginSuccess, (state, action) => {
-        return {
-            ...state,
-            user: action.user
-        }
-    })
+    on(loginSuccess, (state, action) => getUseState(state, action)),
+
+    on(signupSuccess, (state, action) => getUseState(state, action))
 )
 
 export function AuthReducer(state: any, action: any) {
     return _authReducer(state, action)
-}   
+}
+
+function getUseState(state: AuthState, action: any) {
+    return {
+        ...state,
+        user: action.user
+    }
+}

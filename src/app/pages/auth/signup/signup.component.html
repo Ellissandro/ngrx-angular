@@ -2,18 +2,18 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-                <h3>Login</h3>
+                <h3>SignUp</h3>
                 <hr />
-                <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+                <form [formGroup]="signUpForm" (ngSubmit)="onSignUpSubmit()">
                     <div class="mb-3">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" class="form-control" formControlName="email">
-                        <div *ngIf="loginForm.get('email')?.touched && !loginForm.get('email')?.valid">
-                            <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.required">
+                        <div *ngIf="signUpForm.get('email')?.touched && !signUpForm.get('email')?.valid">
+                            <small class="text-danger" *ngIf="signUpForm.get('email')?.errors?.required">
                                 Email is required
                             </small>
 
-                            <small class="text-danger" *ngIf="loginForm.get('email')?.errors?.email">
+                            <small class="text-danger" *ngIf="signUpForm.get('email')?.errors?.email">
                                 Invalid email
                             </small>
                         </div>
@@ -22,16 +22,16 @@
                         <label for="email">Password</label>
                         <input type="password" name="password" id="password" class="form-control"
                             formControlName="password">
-                        <div *ngIf="loginForm.get('password')?.touched && !loginForm.get('password')?.valid">
-                            <small class="text-danger" *ngIf="loginForm.get('password')?.errors?.required">
+                        <div *ngIf="signUpForm.get('password')?.touched && !signUpForm.get('password')?.valid">
+                            <small class="text-danger" *ngIf="signUpForm.get('password')?.errors?.required">
                                 Password is required
                             </small>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <button [disabled]="!loginForm.valid" type="submit" class="btn btn-primary">
-                            Login
+                        <button [disabled]="!signUpForm.valid" type="submit" class="btn btn-primary">
+                            SignUp
                         </button>
                     </div>
                 </form>

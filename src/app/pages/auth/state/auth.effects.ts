@@ -7,7 +7,7 @@ import { catchError, exhaustMap, map, tap } from "rxjs/operators";
 import { AppState } from "src/app/store/app.state";
 import { setErrorMessage, setLoadingSpinner } from "src/app/store/shared/shared.actions";
 import { AuthService } from "../../services/auth.service";
-import { loginStart, loginSuccess } from "./auth.actions";
+import { loginStart, loginSuccess, signupStart, signupSuccess } from "./auth.actions";
 
 @Injectable()
 export class AuthEffects {
@@ -46,4 +46,33 @@ export class AuthEffects {
                     this.router.navigate(['/'])
                 }))
         }, { dispatch: false })
+
+    signUpRedirect$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(signupSuccess),
+                tap(() => {
+                    this.router.navigate(['/'])
+                }))
+        }, { dispatch: false })
+
+
+    signUp$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(signupStart),
+            exhaustMap(action => {
+                return this.authService.signUp(action.email, action.password)
+                    .pipe(map((data) => {
+                        this.store.dispatch(setLoadingSpinner({ status: false }))
+                        this.store.dispatch(setErrorMessage({ message: '' }))
+                        const user = this.authService.formatUser(data);
+                        return signupSuccess({ user });
+                    }),
+                        catchError((error) => {
+                            this.store.dispatch(setLoadingSpinner({ status: false }))
+                            return of(setErrorMessage({ message: error.message }))
+                        })
+                    )
+            }))
+    })
 }
