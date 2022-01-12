@@ -1,7 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { delay } from "rxjs/operators";
+import { AppState } from "src/app/store/app.state";
+import { autoLogout } from "../auth/state/auth.actions";
 import { AuthResponseData } from "../models/AuthResponseData.model";
 import { User } from "../models/user.model";
 
@@ -9,8 +12,9 @@ import { User } from "../models/user.model";
     providedIn: 'root',
 })
 export class AuthService {
-
-    constructor(private http: HttpClient) { }
+    private readonly STORAGE_USER_KEY = 'userData';
+    timeoutInterval: any;
+    constructor(private http: HttpClient, private store: Store<AppState>) { }
 
     login(email: string, password: string): Observable<AuthResponseData> {
         return this.athenticateMock(email, password);
@@ -28,7 +32,7 @@ export class AuthService {
         return of({
             email: email,
             password: password,
-            exprireIn: '',
+            exprireIn: '100000000',
             loalId: '',
             refreshToken: '',
             registred: true,
@@ -39,5 +43,49 @@ export class AuthService {
     formatUser(data: AuthResponseData): User {
         const expiratioNDate = new Date(new Date().getTime() + Number(data.exprireIn) * 1000)
         return new User(data.email, data.idToken, data.loalId, expiratioNDate);
+    }
+
+    setUserInLocalStorage(user: User) {
+        localStorage.setItem(this.STORAGE_USER_KEY, JSON.stringify(user));
+        this.runTimeoutInterval(user)
+    }
+
+    runTimeoutInterval(user: User) {
+        const todayDate = new Date().getTime();
+        const expirationDate = user.expirateDate.getTime();
+        const timeInterval = expirationDate - todayDate;
+
+        this.timeoutInterval = setTimeout(() => {
+           this.store.dispatch(autoLogout());
+        }, timeInterval);
+    }
+
+    getUserFromLocalStorage(): User | null {
+        const userDataString = localStorage.getItem(this.STORAGE_USER_KEY);
+
+        if (userDataString) {
+            const userData = JSON.parse(userDataString);
+            const expirationDate = new Date(userData.expirationDate)
+            const user = new User(
+                userData.email,
+                userData.token,
+                userData.localId,
+                expirationDate
+            );
+
+            this.runTimeoutInterval(user);
+            return user;
+        }
+
+        return null
+    }   
+
+    logout() {
+        localStorage.removeItem(this.STORAGE_USER_KEY);
+
+        if (this.timeoutInterval) {
+            clearTimeout(this.timeoutInterval);
+            this.timeoutInterval = null;
+        }
     }
 }

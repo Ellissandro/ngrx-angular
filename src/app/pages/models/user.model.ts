@@ -5,6 +5,9 @@ export class User {
         private localId: string,
         private expirationDate: Date
     ) {
+    }
 
+    get expirateDate(): Date {
+        return this.expirationDate;
     }
 }
