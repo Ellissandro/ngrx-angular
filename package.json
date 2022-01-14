@@ -1,5 +1,6 @@
 {
   "name": "crud-ngrx",
+  "author": "Elissandro Silva",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
