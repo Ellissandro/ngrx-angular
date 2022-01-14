@@ -1,5 +1,16 @@
 # CrudNgrx
 
+Tópicos abordados nesse projeto:
+- Gerenciamento de estado com NgRx (Actions, Effects, reducer, selector, state)
+- CRUD de usuários
+- CRUD de postagens
+- Login
+- Cadastro
+- CanActivate em rotas
+- TrackBy
+- Interceptor
+- Autenticação
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.12.
 
 ## Development server
