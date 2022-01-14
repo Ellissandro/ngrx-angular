@@ -35,11 +35,11 @@ import { AuthTokenInterceptor } from './pages/services/AuthToken.interceptor';
   ],
   providers: [
     {
-      provide: HTTP_INTERCEPTORS, 
+      provide: HTTP_INTERCEPTORS,
       useClass: AuthTokenInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -8,12 +8,11 @@ import { AppState } from 'src/app/store/app.state';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-
   isAuthenticated: Observable<any>;
-  constructor(private sotre: Store<AppState>) { }
+  constructor(private sotre: Store<AppState>) {}
 
   ngOnInit(): void {
     this.isAuthenticated = this.sotre.select(isAuthenticated);

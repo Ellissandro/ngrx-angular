@@ -8,28 +8,27 @@ import { signupStart } from '../state/auth.actions';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-
   signUpForm: FormGroup;
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.createSignUpForm();
   }
 
-  createSignUpForm() {
+  createSignUpForm(): void {
     this.signUpForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required]),
-    })
+    });
   }
 
-  onSignUpSubmit() {
+  onSignUpSubmit(): void {
     const email: string = this.signUpForm.value.email;
     const password: string = this.signUpForm.value.password;
     this.store.dispatch(setLoadingSpinner({ status: true }));
-    this.store.dispatch(signupStart({ email, password}));
+    this.store.dispatch(signupStart({ email, password }));
   }
 }

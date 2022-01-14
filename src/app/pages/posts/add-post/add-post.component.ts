@@ -8,31 +8,30 @@ import { addPost } from '../state/posts.actions';
 @Component({
   selector: 'app-add-post',
   templateUrl: './add-post.component.html',
-  styleUrls: ['./add-post.component.scss']
+  styleUrls: ['./add-post.component.scss'],
 })
 export class AddPostComponent implements OnInit {
   postForm: FormGroup;
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.createForm();
   }
 
-  createForm() {
+  createForm(): void {
     this.postForm = new FormGroup({
       title: new FormControl(null, [
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(6),
       ]),
       description: new FormControl(null, [
         Validators.required,
-        Validators.minLength(10)
+        Validators.minLength(10),
       ]),
-    })
+    });
   }
 
-
-  showErros(name: string, control: string) {
+  showErros(name: string, control: string): string {
     const formControl = this.postForm.get(control);
 
     if (formControl?.touched && !formControl.valid) {
@@ -48,17 +47,16 @@ export class AddPostComponent implements OnInit {
     return '';
   }
 
-  onAddPost() {
+  onAddPost(): void {
     if (!this.postForm.valid) {
       return;
     }
 
     const post: Post = {
       title: this.postForm.value.title,
-      description: this.postForm.value.description
-    }
+      description: this.postForm.value.description,
+    };
 
     this.store.dispatch(addPost({ post }));
   }
 }
-

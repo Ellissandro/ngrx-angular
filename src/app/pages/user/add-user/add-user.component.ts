@@ -5,13 +5,12 @@ import { User } from '../user.model';
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.scss']
+  styleUrls: ['./add-user.component.scss'],
 })
 export class AddUserComponent {
+  @Output() onAddUser = new EventEmitter<User>();
 
-  @Output() onAddUser = new EventEmitter<User>()
-
-  onSubmit(f: NgForm) {
+  onSubmit(f: NgForm): void {
     this.onAddUser.emit(f.value);
     f.reset();
   }

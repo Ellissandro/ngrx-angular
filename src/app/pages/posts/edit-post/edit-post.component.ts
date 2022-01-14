@@ -11,21 +11,23 @@ import { getPostById } from '../state/posts.selector';
 @Component({
   selector: 'app-edit-post',
   templateUrl: './edit-post.component.html',
-  styleUrls: ['./edit-post.component.scss']
+  styleUrls: ['./edit-post.component.scss'],
 })
 export class EditPostComponent implements OnInit, OnDestroy {
   post?: Post;
   postSubscription: Subscription;
   postForm: FormGroup;
-  constructor(private store: Store<AppState>,
+  constructor(
+    private store: Store<AppState>,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.getId();
   }
 
-  getId() {
+  getId(): void {
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
 
@@ -34,25 +36,24 @@ export class EditPostComponent implements OnInit, OnDestroy {
         .subscribe((data) => {
           this.post = data;
           this.createForm();
-        })
-    })
+        });
+    });
   }
 
-  createForm() {
+  createForm(): void {
     this.postForm = new FormGroup({
       title: new FormControl(this.post?.title, [
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(6),
       ]),
       description: new FormControl(this.post?.description, [
         Validators.required,
-        Validators.minLength(10)
+        Validators.minLength(10),
       ]),
-    })
+    });
   }
 
-
-  showErros(name: string, control: string) {
+  showErros(name: string, control: string): string {
     const formControl = this.postForm.get(control);
 
     if (formControl?.touched && !formControl.valid) {
@@ -68,7 +69,7 @@ export class EditPostComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  onUpdatePost() {
+  onUpdatePost(): void {
     if (!this.postForm.valid) {
       return;
     }
@@ -76,8 +77,8 @@ export class EditPostComponent implements OnInit, OnDestroy {
     const post: Post = {
       id: this.post?.id,
       title: this.postForm.value.title,
-      description: this.postForm.value.description
-    }
+      description: this.postForm.value.description,
+    };
 
     this.store.dispatch(updatePost({ post }));
     this.router.navigate(['posts']);
