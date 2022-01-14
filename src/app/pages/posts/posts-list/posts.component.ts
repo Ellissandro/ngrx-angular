@@ -26,4 +26,8 @@ export class PostsComponent implements OnInit {
       this.store.dispatch(deletePost({ id }))
     }
   }
+
+  trackByFn(_: number, item: Post) {
+    return item.id;
+  }
 }

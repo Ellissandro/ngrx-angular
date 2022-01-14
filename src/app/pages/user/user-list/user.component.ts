@@ -46,6 +46,10 @@ export class UserComponent implements OnInit, OnDestroy {
     this.store.dispatch(deleteUser({ id }));
   }
 
+  trackByFn(_: number, item: User) {
+    return item.id;
+  }
+
   ngOnDestroy(): void {
     this.done.next();
     this.done.complete();

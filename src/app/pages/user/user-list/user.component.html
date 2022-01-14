@@ -24,7 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let user of (users$ | async); index as i">
+                                <tr *ngFor="let user of (users$ | async); index as i; trackBy: trackByFn">
                                     <th scope="row">{{ i + 1 }}</th>
                                     <td>{{ user.name }}</td>
                                     <td class="text-center">{{ user.age }}</td>
