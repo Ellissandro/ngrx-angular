@@ -20,7 +20,7 @@ export class AuthService {
     return this.athenticateMock(email, password);
   }
 
-  signUp(email: string, password: string) {
+  signUp(email: string, password: string): Observable<AuthResponseData> {
     return this.athenticateMock(email, password);
   }
 
@@ -48,12 +48,12 @@ export class AuthService {
     return new User(data.email, data.idToken, data.loalId, expiratioNDate);
   }
 
-  setUserInLocalStorage(user: User) {
+  setUserInLocalStorage(user: User): void {
     localStorage.setItem(this.STORAGE_USER_KEY, JSON.stringify(user));
     this.runTimeoutInterval(user);
   }
 
-  runTimeoutInterval(user: User) {
+  runTimeoutInterval(user: User): void {
     const todayDate = new Date().getTime();
     const expirationDate = user.expirateDate.getTime();
     const timeInterval = expirationDate - todayDate;
