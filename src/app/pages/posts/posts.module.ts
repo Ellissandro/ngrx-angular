@@ -10,6 +10,7 @@ import { EditPostComponent } from './edit-post/edit-post.component';
 import { PostsComponent } from './posts-list/posts.component';
 import { PostsEffects } from './state/posts.efffects';
 import { postsReducer } from './state/posts.reducer';
+import { SinglePostsComponent } from './single-posts/single-posts.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [PostsComponent, AddPostComponent, EditPostComponent],
+  declarations: [
+    PostsComponent,
+    AddPostComponent,
+    EditPostComponent,
+    SinglePostsComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

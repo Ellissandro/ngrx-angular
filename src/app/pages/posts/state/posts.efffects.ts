@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { RouterNavigationAction, ROUTER_NAVIGATION } from '@ngrx/router-store';
+import { filter, map, mergeMap, switchMap } from 'rxjs/operators';
 import { PostsService } from '../../services/post.service';
 import {
   addPost,
@@ -63,6 +64,26 @@ export class PostsEffects {
         return this.postsService.deletePost(action.id).pipe(
           map((id) => {
             return deletePostSuccess({ id });
+          }),
+        );
+      }),
+    );
+  });
+
+  getSinglePost = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ROUTER_NAVIGATION),
+      filter((r: RouterNavigationAction) => {
+        return r.payload.routerState.url.startsWith('/posts/details');
+      }),
+      map((r: RouterNavigationAction) => {
+        return r.payload.routerState['params']['id'];
+      }),
+      switchMap((id) => {
+        return this.postsService.getPostById(id).pipe(
+          map((post) => {
+            const postData = [{ ...post, id }];
+            return loadPostsSuccess({ posts: postData });
           }),
         );
       }),
