@@ -1,7 +1,7 @@
 # CrudNgrx
 
 Tópicos abordados nesse projeto:
-- Gerenciamento de estado com NgRx (actions, effects, reducer, selector, state, router-store)
+- Gerenciamento de estado com NgRx (actions, effects, reducer, selector, state, router-store, entity)
 - CRUD de usuários
 - CRUD de postagens
 - Login
